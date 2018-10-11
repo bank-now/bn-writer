@@ -7,14 +7,15 @@ import (
 )
 
 const (
-	CassandraAddress1 = "192.168.88.24:9042"
-	CassandraAddress2 = "192.168.88.28:9042"
-	KeySpace          = "banknow"
+	dBAddress1             = "192.168.88.24:9042"
+	dBAddress2             = "192.168.88.28:9042"
+	keySpace               = "banknow"
+	insertIntoTransactions = `INSERT INTO transactions (id, account, amt, ts) VALUES (?, ?, ?, ?)`
 )
 
 func Connect() (session *gocql.Session, err error) {
-	cluster := gocql.NewCluster(CassandraAddress1, CassandraAddress2)
-	cluster.Keyspace = KeySpace
+	cluster := gocql.NewCluster(dBAddress1, dBAddress2)
+	cluster.Keyspace = keySpace
 	return cluster.CreateSession()
 
 }
@@ -24,7 +25,7 @@ func Write(session *gocql.Session, transaction model.Transaction) (err error) {
 	//TODO: convert. Maybe use a different type in model.Transaction
 	amt := inf.NewDec(250000.00, 0)
 
-	if err = session.Query(`INSERT INTO transactions (id, account, amt, ts) VALUES (?, ?, ?, ?)`,
+	if err = session.Query(insertIntoTransactions,
 		transaction.ID, transaction.AccountID, amt, transaction.Timestamp).Exec(); err != nil {
 	}
 	return

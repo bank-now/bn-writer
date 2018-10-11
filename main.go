@@ -2,10 +2,12 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/bank-now/bn-common-io/queues/sub"
+	"github.com/bank-now/bn-common-model/common/model"
 	"github.com/bank-now/bn-common-model/common/operation"
 	"github.com/bank-now/bn-writer/cassandra"
+	"github.com/gocql/gocql"
+	"log"
 )
 
 const (
@@ -15,10 +17,18 @@ const (
 	Address = "192.168.88.24:4150"
 )
 
+var (
+	session *gocql.Session
+)
+
 func main() {
 
 	//Connect to the DB
-	session := cassandra.Connect()
+	s, err := cassandra.Connect()
+	if err != nil {
+		log.Fatal(err)
+	}
+	session = s
 
 	config := sub.Config{
 		Address: Address,
@@ -31,14 +41,26 @@ func main() {
 }
 
 func handle(b []byte) {
+
+	//Read operation
 	var item operation.WriteOperationV1
 	err := json.Unmarshal(b, &item)
 	if err != nil {
-		//Deal letter queue!
+		//TODO: Deal letter queue!
 		return
 	}
-	//url := fmt.Sprint(Grest, model.TransactionTable)
-	//rBody, err := rest.Post(url, item.Item)
-	fmt.Println(string(item.Item))
+
+	//Transaction
+	var transaction model.Transaction
+	err = json.Unmarshal(item.Item, &transaction)
+	if err != nil {
+		//TODO: Deal letter queue!
+		return
+	}
+	err = cassandra.Write(session, transaction)
+	if err != nil {
+		//TODO: Deal letter queue!
+		return
+	}
 
 }
