@@ -8,6 +8,7 @@ import (
 	"github.com/bank-now/bn-writer/cassandra"
 	"github.com/gocql/gocql"
 	"log"
+	"time"
 )
 
 const (
@@ -42,6 +43,9 @@ func main() {
 
 func handle(b []byte) {
 
+	//TODO: measure timing - Zipkin
+	start := time.Now()
+
 	//Read operation
 	var item operation.WriteOperationV1
 	err := json.Unmarshal(b, &item)
@@ -57,10 +61,19 @@ func handle(b []byte) {
 		//TODO: Deal letter queue!
 		return
 	}
+	write(transaction)
+	time.Since(start)
+
+}
+
+func write(transaction model.Transaction) (err error) {
+	start := time.Now()
 	err = cassandra.Write(session, transaction)
+	time.Since(start)
 	if err != nil {
 		//TODO: Deal letter queue!
 		return
 	}
-
+	time.Since(start)
+	return
 }
