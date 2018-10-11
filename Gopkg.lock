@@ -3,22 +3,65 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:24a08662d2143a87d02118d0ea542117fb89e08b50c372a6a8f7057edd6334ed"
+  digest = "1:e05c26b605ed8e996ad143455e5495f797be7ca242a1fee58f187c5b1f75f20d"
   name = "github.com/bank-now/bn-common-io"
-  packages = ["queues/sub"]
+  packages = [
+    "queues/sub",
+    "rest",
+    "util",
+    "zipkin",
+  ]
   pruneopts = "UT"
-  revision = "e0c5a6173945d09a67730ec44acff96983462614"
+  revision = "3d5cc7dc27aa93c27dd69afc14206d22e05df3da"
 
 [[projects]]
   branch = "master"
-  digest = "1:7e591a9b814dc50f8964c6c64a983d2dc20efb4c6b2a99a3f5e4e2b95ae9b29f"
+  digest = "1:eea59beb4b58f5a6d39d7fc3d56c5942486572c285c87838f937afa6f9354972"
   name = "github.com/bank-now/bn-common-model"
   packages = [
     "common/model",
     "common/operation",
   ]
   pruneopts = "UT"
-  revision = "f2a05cf3fb22e492a8be80aaedc25ed888246fe2"
+  revision = "df6e7ad1444f4cc5f3e225934499a62e50e2e484"
+
+[[projects]]
+  branch = "master"
+  digest = "1:7a8e0f3e6962bfd8dc3b2f0395960cd36f32eb94ec7220cf7f6a2cd18bf02e59"
+  name = "github.com/gocql/gocql"
+  packages = [
+    ".",
+    "internal/lru",
+    "internal/murmur",
+    "internal/streams",
+  ]
+  pruneopts = "UT"
+  revision = "26b68fd731048f2db526e5e6147a69330cb241bc"
+
+[[projects]]
+  digest = "1:94d8c9e3a4954505ca89243e2121180972eecf8e3d160f3b34a48825ddd95cc1"
+  name = "github.com/golang-plus/errors"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "a61c34ead85085f3e1b87b8c04e49bbf60c99fb1"
+  version = "v1.0.0"
+
+[[projects]]
+  digest = "1:224bf08a201edf15ec9f086549321257d5a2ee0d23dc649e7e6ad90ce5502439"
+  name = "github.com/golang-plus/uuid"
+  packages = [
+    ".",
+    "internal",
+    "internal/dcesecurity",
+    "internal/namebased",
+    "internal/namebased/md5",
+    "internal/namebased/sha1",
+    "internal/random",
+    "internal/timebased",
+  ]
+  pruneopts = "UT"
+  revision = "a0510c37ef1f49c8290c3a9911d0f7f9ed24d335"
+  version = "v1.0.0"
 
 [[projects]]
   branch = "master"
@@ -37,6 +80,14 @@
   version = "v1.0.0"
 
 [[projects]]
+  branch = "master"
+  digest = "1:364b908b9b27b97ab838f2f6f1b1f46281fa29b978a037d72a9b1d4f6d940190"
+  name = "github.com/hailocab/go-hostpool"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "e80d13ce29ede4452c43dea11e79b9bc8a15b478"
+
+[[projects]]
   digest = "1:bb48459ec76efe45f13094480296462ef5c9aaa56662918819b7a8fce3155b8b"
   name = "github.com/nsqio/go-nsq"
   packages = ["."]
@@ -44,12 +95,23 @@
   revision = "eee57a3ac4174c55924125bb15eeeda8cffb6e6f"
   version = "v1.0.7"
 
+[[projects]]
+  digest = "1:2d1fbdc6777e5408cabeb02bf336305e724b925ff4546ded0fa8715a7267922a"
+  name = "gopkg.in/inf.v0"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "d2d2541c53f18d2a059457998ce2876cc8e67cbf"
+  version = "v0.9.1"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
     "github.com/bank-now/bn-common-io/queues/sub",
+    "github.com/bank-now/bn-common-model/common/model",
     "github.com/bank-now/bn-common-model/common/operation",
+    "github.com/gocql/gocql",
+    "gopkg.in/inf.v0",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

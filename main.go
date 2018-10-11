@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/bank-now/bn-common-io/queues/sub"
 	"github.com/bank-now/bn-common-model/common/operation"
+	"github.com/bank-now/bn-writer/cassandra"
 )
 
 const (
@@ -15,6 +16,10 @@ const (
 )
 
 func main() {
+
+	//Connect to the DB
+	session := cassandra.Connect()
+
 	config := sub.Config{
 		Address: Address,
 		Name:    Name,
